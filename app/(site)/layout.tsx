@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import Topbar from "@/components/navigation/topbar/function";
-import DesktopNavbar from "@/components/navigation/desktop-navigation/function";
-import MobileNavbar from "@/components/navigation/mobile-navigation/function";
-import Footer from "@/components/navigation/footer/function";
-import ThemeProvider from "@/components/theme-provider/function";
-import ScrollToTop from "@/components/navigation/scroll-to-top/function";
-import ActivityTracker from "@/lib/activity-tracking";
+import Topbar from '@/components/navigation/topbar/function';
+import DesktopNavbar from '@/components/navigation/desktop-navigation/function';
+import MobileNavbar from '@/components/navigation/mobile-navigation/function';
+import Footer from '@/components/navigation/footer/function';
+import ThemeProvider from '@/components/theme-provider/function';
 
-
+import ScrollToTop from '@/components/navigation/scroll-to-top/function';
+import ActivityTracker from '@/lib/activity-tracking';
 
 export default function SiteLayout({
   children,
@@ -16,14 +15,13 @@ export default function SiteLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div
-    >
+    <div>
       <ThemeProvider>
         {/* Activity Tracker */}
         <ActivityTracker
           idleTimeout={300000} // 5 minutes
-          onIdle={() => console.log("User is idle.")}
-          onActive={() => console.log("User is active.")}
+          onIdle={() => console.log('User is idle.')}
+          onActive={() => console.log('User is active.')}
         />
 
         {/* Topbar */}

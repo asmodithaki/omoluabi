@@ -1,33 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import useClickOutside from "@/hooks/useClickOutside"; // A custom hook to handle click outside events
 
 interface DropdownProps {
   items: string[];
-  onSelectAction: (item: string) => void; // Renamed to indicate it's a Server Action
+  onItemSelectAction: (item: string) => void; // Renamed for serialization compliance
+  buttonLabel?: string; // Optional label for the dropdown button
 }
 
-export default function Dropdown({ items, onSelectAction }: DropdownProps) {
+export default function ResponsiveDropdown({ items, onItemSelectAction, buttonLabel = "Select" }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null); // Nullable type to match the updated hook
+
+  // Close the dropdown when clicking outside
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2 bg-gray-200 rounded-md"
+        className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-md text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
       >
-        Select
+        {buttonLabel}
       </button>
+
       {isOpen && (
-        <div className="absolute mt-2 bg-white shadow-md rounded-md w-full">
+        <div className="absolute mt-2 w-48 bg-white dark:bg-gray-800 shadow-md rounded-md z-10">
           {items.map((item, index) => (
             <button
               key={index}
               onClick={() => {
-                onSelectAction(item); // Updated to use the new name
+                onItemSelectAction(item); // Updated to the new prop name
                 setIsOpen(false);
               }}
-              className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+              className="block w-full px-4 py-2 text-left text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
             >
               {item}
             </button>

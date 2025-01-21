@@ -1,77 +1,77 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import ResponsiveDropdown from "@/components/ui/Dropdown";
 
 export default function MobileNavbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const aboutUsItems = ["Our Story", "Team"];
+  const initiativesItems = ["Initiative 1", "Initiative 2"];
+
+  const handleSelectAction = (item: string) => {
+    console.log(`Selected: ${item}`);
   };
 
   return (
-    <nav className="md:hidden bg-white shadow-md">
-      <div className="flex justify-between items-center px-4 py-2">
-        <a href="#" className="text-yellow-600 font-bold">
+    <nav className="md:hidden flex flex-col bg-white shadow-md relative z-10">
+      {/* Top Bar */}
+      <div className="flex justify-between items-center px-4 py-2 bg-gray-950">
+        <Link href="/" className="text-yellow-600 font-bold text-lg">
           HOME
-        </a>
+        </Link>
         <button
-          onClick={toggleMenu}
-          className="text-gray-800 focus:outline-none"
+          className="text-white text-2xl"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          ☰
+          {isMenuOpen ? "✖" : "☰"}
         </button>
       </div>
-      {isOpen && (
-        <div className="bg-white shadow-md">
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
-            ABOUT US
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
-            INITIATIVES
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
+
+      {/* Dropdown Menu */}
+      {isMenuOpen && (
+        <div className="flex flex-col space-y-2 px-4 py-4 bg-white text-gray-800">
+          <ResponsiveDropdown
+            items={aboutUsItems}
+            onItemSelectAction={handleSelectAction}
+            buttonLabel="About Us"
+          />
+          <ResponsiveDropdown
+            items={initiativesItems}
+            onItemSelectAction={handleSelectAction}
+            buttonLabel="Yoruba Initiatives"
+          />
+          <Link href="#" className="text-gray-800 hover:underline">
             BLOG
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
+          </Link>
+          <Link href="#" className="text-gray-800 hover:underline">
             YORUBA E-LIBRARY
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
+          </Link>
+          <Link href="#" className="text-gray-800 hover:underline">
             SHOP
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
+          </Link>
+          <Link href="#" className="text-gray-800 hover:underline">
             DONATE
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-          >
+          </Link>
+          <Link href="#" className="text-gray-800 hover:underline">
             JOIN US
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-yellow-500 bg-gray-100 rounded-md text-center mx-4 my-2"
-          >
-            Login
-          </a>
+          </Link>
+
+          {/* Login and Utility */}
+          <div className="flex flex-col space-y-2 mt-4">
+            <Link
+              href="#"
+              className="px-4 py-2 bg-yellow-500 text-white text-center rounded-md hover:bg-yellow-600"
+            >
+              Login
+            </Link>
+            <div className="text-gray-800">$0.00</div>
+            <div className="flex justify-center space-x-4">
+              <button className="text-gray-800">🛒</button>
+              <button className="text-gray-800">🔍</button>
+            </div>
+          </div>
         </div>
       )}
     </nav>

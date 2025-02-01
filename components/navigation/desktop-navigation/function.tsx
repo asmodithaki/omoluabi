@@ -12,55 +12,57 @@ export default function DesktopNavbar() {
   };
 
   return (
-    <nav className="hidden md:flex justify-between items-center px-8 py-4 bg-gray-950 shadow-md relative z-10">
-      <div className="flex space-x-8 items-center">
+    <nav className="hidden md:flex justify-between items-center px-4 lg:px-8 py-3 bg-gray-950 shadow-md relative z-10">
+      {/* Left Navigation Links */}
+      <div className="flex space-x-6 lg:space-x-8 items-center">
         <Link href="/" className="text-yellow-600 font-bold hover:underline">
-          home
+         Yoruba Ronu
         </Link>
 
+        {/* Dropdowns */}
         <ResponsiveDropdown
           items={aboutUsItems}
-          onItemSelectAction={handleSelectAction} 
-          buttonLabel="About us"
+          onItemSelectAction={handleSelectAction}
+          buttonLabel="about"
         />
         <ResponsiveDropdown
           items={initiativesItems}
           onItemSelectAction={handleSelectAction}
-          buttonLabel="Initiatives"
+          buttonLabel="initiatives"
         />
 
-        <Link href="#" className="text-gray-800 dark:text-white hover:underline">
+        {/* Shortened Static Links */}
+        <Link href="#" className="text-gray-300 hover:underline">
           blog
         </Link>
-        <Link href="#" className="text-gray-800 dark:text-white hover:underline">
-          yoruba e-library
+        <Link href="#" className="text-gray-300 hover:underline">
+          e-library
         </Link>
-        <Link href="#" className="text-gray-800 dark:text-white hover:underline">
-          shop
-        </Link>
-        <Link href="#" className="text-gray-800 dark:text-white hover:underline">
+        <Link href="#" className="text-gray-300 hover:underline">
           donate
         </Link>
-        <Link href="#" className="text-gray-800 dark:text-white hover:underline">
-          join us
+        <Link href="#" className="text-gray-300 hover:underline">
+          shop
+        </Link>
+        <Link href="#" className="text-gray-300 hover:underline">
+          join
         </Link>
       </div>
 
+      {/* Right Navigation Links */}
       <div className="flex space-x-4 items-center">
+        {/* Login Button */}
         <Link
           href="#"
           className="px-4 py-2 bg-yellow-500 text-white font-medium rounded-md hover:bg-yellow-600"
         >
           login
         </Link>
-        <div className="text-gray-800 dark:text-white">$0.00</div>
         <div className="flex space-x-2">
-          <button className="text-gray-800 dark:text-white">
+          <button className="text-gray-300 hover:text-gray-400">
             🛒
           </button>
-          <button className="text-gray-800 dark:text-white">
-            🔍
-          </button>
+         
         </div>
       </div>
     </nav>

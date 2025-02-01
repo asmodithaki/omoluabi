@@ -10,6 +10,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold text-white">Yoruba Ronu</h3>
             <p className="mt-2 text-sm text-gray-400">
+              
               Empowering communities through education, culture, and initiatives
               that drive positive change.
             </p>

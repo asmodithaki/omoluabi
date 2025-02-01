@@ -1,0 +1,66 @@
+// schema.prisma
+
+// Define the database provider (e.g., PostgreSQL, MySQL, SQLite, etc.)
+datasource db {
+  provider = "postgresql" // Adjust based on your database
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User model for storing user details
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  passwordHash  String
+  name          String?
+  image         String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  Token Token[]
+}
+
+// Session model for storing user session data
+model Session {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Account model for third-party authentication (e.g., Google, GitHub)
+model Account {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  provider    String
+  providerAccountId String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Role enumeration for different user roles (Admin, User, etc.)
+enum Role {
+  ADMIN
+  USER
+}
+
+// Token model for storing JWTs or other types of authentication tokens
+model Token {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  token      String
+  type       String    // E.g., 'access' or 'refresh'
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}

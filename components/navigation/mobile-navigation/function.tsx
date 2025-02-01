@@ -15,15 +15,16 @@ export default function MobileNavbar() {
   };
 
   return (
-    <nav className="md:hidden flex flex-col bg-white shadow-md relative z-10">
+    <nav className="md:hidden flex flex-col bg-white shadow-md relative z-10 w-full">
       {/* Top Bar */}
-      <div className="flex justify-between items-center px-4 py-2 bg-gray-950">
+      <div className="flex justify-between items-center px-4 py-3 bg-gray-950">
         <Link href="/" className="text-yellow-600 font-bold text-lg">
-          HOME
+        Yoruba Ronu
         </Link>
         <button
-          className="text-white text-2xl"
+          className="text-white text-2xl focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle Menu"
         >
           {isMenuOpen ? "✖" : "☰"}
         </button>
@@ -31,7 +32,8 @@ export default function MobileNavbar() {
 
       {/* Dropdown Menu */}
       {isMenuOpen && (
-        <div className="flex flex-col space-y-2 px-4 py-4 bg-white text-gray-800">
+        <div className="flex flex-col space-y-3 px-4 py-4 bg-white text-gray-800">
+          {/* Dropdowns */}
           <ResponsiveDropdown
             items={aboutUsItems}
             onItemSelectAction={handleSelectAction}
@@ -42,6 +44,8 @@ export default function MobileNavbar() {
             onItemSelectAction={handleSelectAction}
             buttonLabel="Yoruba Initiatives"
           />
+
+          {/* Static Links */}
           <Link href="#" className="text-gray-800 hover:underline">
             BLOG
           </Link>
@@ -58,18 +62,28 @@ export default function MobileNavbar() {
             JOIN US
           </Link>
 
-          {/* Login and Utility */}
-          <div className="flex flex-col space-y-2 mt-4">
+          {/* Login and Utility Section */}
+          <div className="flex flex-col space-y-3 mt-4">
             <Link
               href="#"
               className="px-4 py-2 bg-yellow-500 text-white text-center rounded-md hover:bg-yellow-600"
             >
               Login
             </Link>
-            <div className="text-gray-800">$0.00</div>
+            <div className="text-gray-800 text-center">$0.00</div>
             <div className="flex justify-center space-x-4">
-              <button className="text-gray-800">🛒</button>
-              <button className="text-gray-800">🔍</button>
+              <button
+                aria-label="Cart"
+                className="text-gray-800 hover:text-gray-600"
+              >
+                🛒
+              </button>
+              <button
+                aria-label="Search"
+                className="text-gray-800 hover:text-gray-600"
+              >
+                🔍
+              </button>
             </div>
           </div>
         </div>

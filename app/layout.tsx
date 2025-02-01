@@ -1,22 +1,9 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+'use client';
+
 import './globals.css';
 import ChakraUIProvider from '@/components/chakra-provider/function';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
-export const metadata: Metadata = {
-  title: 'Yoruba Ronu',
-  description: 'Omoluabi',
-};
+import { LanguageProvider } from '@/lingual-context/LanguageContext';
+import { SessionProvider } from 'next-auth/react';
 
 export default function RootLayout({
   children,
@@ -25,10 +12,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ChakraUIProvider>{children}</ChakraUIProvider>
+      <body className="antialiased bg-gray-100 text-black dark:text-white">
+          <SessionProvider>
+          <LanguageProvider>
+            <ChakraUIProvider>
+              {children}
+            </ChakraUIProvider>
+          </LanguageProvider>
+          </SessionProvider>
+       
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 interface ActivityTrackerProps {
   idleTimeout?: number; // Time in milliseconds before the user is considered idle (default: 5 minutes)
@@ -9,27 +9,31 @@ interface ActivityTrackerProps {
 }
 
 const ActivityTracker: React.FC<ActivityTrackerProps> = ({
-  idleTimeout = 300000, // Default idle timeout: 5 minutes
-  onIdle = () => console.log("User is idle"), // Default idle callback
-  onActive = () => console.log("User is active"), // Default active callback
+  idleTimeout = 300000,
+  onIdle = () => console.log("User is idle"),
+  onActive = () => console.log("User is active"),
 }) => {
+  const handleIdle = useCallback(onIdle, [onIdle]);
+  const handleActive = useCallback(onActive, [onActive]);
+
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     let lastActivityTime = Date.now();
     let isIdle = false;
 
     const handleActivity = () => {
       lastActivityTime = Date.now();
-
       if (isIdle) {
         isIdle = false;
-        onActive(); // Trigger active callback
+        handleActive();
       }
     };
 
     const checkIdleStatus = () => {
       if (!isIdle && Date.now() - lastActivityTime > idleTimeout) {
         isIdle = true;
-        onIdle(); // Trigger idle callback
+        handleIdle();
       }
     };
 
@@ -38,18 +42,17 @@ const ActivityTracker: React.FC<ActivityTrackerProps> = ({
       window.addEventListener(event, handleActivity)
     );
 
-    const idleInterval = setInterval(checkIdleStatus, 1000); // Check idle status every second
+    const idleInterval = setInterval(checkIdleStatus, 1000);
 
-    // Cleanup event listeners and interval on unmount
     return () => {
       activityEvents.forEach((event) =>
         window.removeEventListener(event, handleActivity)
       );
       clearInterval(idleInterval);
     };
-  }, [idleTimeout, onIdle, onActive]);
+  }, [idleTimeout, handleIdle, handleActive]);
 
-  return null; // No UI for this component, as it only tracks activity
+  return null; // No UI for this component
 };
 
 export default ActivityTracker;
